@@ -1,0 +1,125 @@
+@model CVBuilder.Models.CVViewModel
+@{
+    Layout = null; // No layout for a standalone template
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV - Template 2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Header Section -->
+        <div class="text-center mb-4">
+            <h1 class="display-4">@Model.PersonalDetails.FullName</h1>
+            <p class="lead text-muted">@Model.PersonalDetails.Email | @Model.PersonalDetails.ContactNumber</p>
+        </div>
+
+        <!-- Personal Details -->
+        <section class="mb-4">
+            <h2 class="text-primary">Personal Information</h2>
+            <hr />
+            <p><strong>Address:</strong> @Model.PersonalDetails.Address</p>
+        </section>
+
+        <!-- Work Experience -->
+        <section class="mb-4">
+            <h2 class="text-primary">Work Experience</h2>
+            <hr />
+            @if (Model.WorkExperiences.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var work in Model.WorkExperiences)
+                    {
+                        <li class="list-group-item">
+                            <h5>@work.CompanyName</h5>
+                            <p><strong>Role:</strong> @work.JobTitle</p>
+                            <p><strong>Duration:</strong> @work.StartDate - @work.EndDate</p>
+                            <p>@work.JobDescription</p>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No work experience provided.</p>
+            }
+        </section>
+
+        <!-- Education -->
+        <section class="mb-4">
+            <h2 class="text-primary">Education</h2>
+            <hr />
+            @if (Model.Educations.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var education in Model.Educations)
+                    {
+                        <li class="list-group-item">
+                            <h5>@education.Institution</h5>
+                            <p><strong>Degree:</strong> @education.Degree</p>
+                            <p><strong>Graduation Year:</strong> @education.GraduationYear</p>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No education details provided.</p>
+            }
+        </section>
+
+        <!-- Skills -->
+        <section class="mb-4">
+            <h2 class="text-primary">Skills</h2>
+            <hr />
+            @if (Model.Skills.Any())
+            {
+                <ul class="list-inline">
+                    @foreach (var skill in Model.Skills)
+                    {
+                        <li class="list-inline-item badge bg-secondary text-white p-2">@skill.SkillName</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No skills listed.</p>
+            }
+        </section>
+
+        <!-- Languages -->
+        <section class="mb-4">
+            <h2 class="text-primary">Languages</h2>
+            <hr />
+            @if (Model.Languages.Any())
+            {
+                <ul>
+                    @foreach (var language in Model.Languages)
+                    {
+                        <li>@language.LanguageName</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No languages listed.</p>
+            }
+        </section>
+    </div>
+  <hr>
+  <form asp-action="GenerateCVPdf" method="post">
+    <button type="submit" name="id" value="@Model.PersonalDetails.Id">Download as PDF</button>
+</form>
+
+    <footer class="text-center mt-5">
+        <p class="text-muted">&copy; @DateTime.Now.Year CV Builder - Template 2</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

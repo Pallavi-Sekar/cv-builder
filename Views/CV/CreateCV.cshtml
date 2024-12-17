@@ -1,0 +1,322 @@
+@model CVBuilder.Models.CVViewModel
+
+<!-- CSS Styles for Beautifying the Form -->
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fc;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .cv-form {
+        max-width: 800px;
+        margin: 30px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+        color: #2d3e50;
+        font-size: 1.6em;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        color: #555;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+    .form-control:focus {
+        border-color: #6c5ce7;
+        box-shadow: 0 0 8px rgba(108, 92, 231, 0.2);
+    }
+
+    textarea.form-control {
+        height: 120px;
+        resize: vertical;
+    }
+
+    button {
+        background-color: #6c5ce7;
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #5a4fcf;
+    }
+
+    .btn-primary {
+        background-color: #4CAF50;
+        border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+        background-color: #45a049;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        border-radius: 5px;
+    }
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+
+    .section {
+        margin-bottom: 40px;
+    }
+
+    .add-button {
+        background-color: #ff6f61;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .add-button:hover {
+        background-color: #e74c3c;
+    }
+
+    .work-experience-container {
+        margin-top: 20px;
+    }
+
+    .work-experience-item {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .work-experience-item .form-group {
+        margin-bottom: 10px;
+    }
+
+    .work-experience-item input,
+    .work-experience-item textarea {
+        margin-top: 5px;
+    }
+</style>
+
+<!-- Form Section -->
+<form asp-action="CreateCV" method="post" class="cv-form">
+    <h3>Personal Details</h3>
+    <div class="section">
+        <div class="form-group">
+            <label for="FullName">Full Name</label>
+            <input type="text" id="FullName" name="PersonalDetails.FullName" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="ContactNumber">Contact Number</label>
+            <input type="text" id="ContactNumber" name="PersonalDetails.ContactNumber" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" id="Email" name="PersonalDetails.Email" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Address">Address</label>
+            <textarea id="Address" name="PersonalDetails.Address" class="form-control" required></textarea>
+        </div>
+    </div>
+
+    <h3>Work Experience</h3>
+    <div class="work-experience-container" id="workExperienceContainer">
+        <div class="work-experience-item">
+            <div class="form-group">
+                <label for="JobTitle_0">Job Title</label>
+                <input type="text" id="JobTitle_0" name="WorkExperiences[0].JobTitle" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="CompanyName_0">Company Name</label>
+                <input type="text" id="CompanyName_0" name="WorkExperiences[0].CompanyName" class="form-control"
+                    required />
+            </div>
+
+            <div class="form-group">
+                <label for="StartDate_0">Start Date</label>
+                <input type="date" id="StartDate_0" name="WorkExperiences[0].StartDate" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="EndDate_0">End Date</label>
+                <input type="date" id="EndDate_0" name="WorkExperiences[0].EndDate" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="Description_0">Job Description</label>
+                <textarea id="Description_0" name="WorkExperiences[0].JobDescription" class="form-control"
+                    required></textarea>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="add-button" id="addExperience">Add More Experience</button>
+
+    <h3>Education</h3>
+    <div class="education-container" id="educationContainer">
+        <div class="education-item">
+            <div class="form-group">
+                <label for="Degree_0">Job Title</label>
+                <input type="text" id="Degree_0" name="educations[0].Degree" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="InstitutionName_0">Company Name</label>
+                <input type="text" id="InstitutionName_0" name="educations[0].Institution" class="form-control"
+                    required />
+            </div>
+
+            <div class="form-group">
+                <label for="GraduationDate_0">Start Date</label>
+                <input type="date" id="GraduationDate_0" name="educations[0].GraduationYear" class="form-control" required />
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="add-button" id="addEducation">Add More Experience</button>
+
+
+    <h3>Skills</h3>
+    <div class="section">
+        <div class="form-group">
+            <label for="SkillName">Skill</label>
+            <input type="text" id="SkillName" name="Skills[0].SkillName" class="form-control" required />
+        </div>
+    </div>
+
+    <h3>Languages</h3>
+    <div class="section">
+        <div class="form-group">
+            <label for="LanguageName">Language</label>
+            <input type="text" id="LanguageName" name="Languages[0].LanguageName" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Proficiency">Proficiency</label>
+            <select id="Proficiency" name="Languages[0].ProficiencyLevel" class="form-control" required>
+                <option value="Basic">Basic</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+                <option value="Fluent">Fluent</option>
+            </select>
+        </div>
+    </div>
+
+    <hr />
+
+    <button type="submit" name="saveDraft" value="true">Save Draft</button>
+
+    <input type="hidden" id="SelectedTemplate" name="SelectedTemplate" value="1" />
+    <button type="submit" onclick="document.getElementById('SelectedTemplate').value = '1';">Submit Template 1</button>
+    <button type="submit" onclick="document.getElementById('SelectedTemplate').value = '2';">Submit Template 2</button>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const workExperienceContainer = document.getElementById("workExperienceContainer");
+        const addExperienceButton = document.getElementById("addExperience");
+
+        addExperienceButton.addEventListener("click", () => {
+            const experienceCount = workExperienceContainer.children.length;
+
+            const newExperience = document.createElement("div");
+            newExperience.className = "work-experience-item";
+            newExperience.innerHTML = `
+                <div class="form-group">
+                    <label for="JobTitle_${experienceCount}">Job Title</label>
+                    <input type="text" id="JobTitle_${experienceCount}" name="WorkExperiences[${experienceCount}].JobTitle" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                <label for="CompanyName_${experienceCount}">Company Name</label>
+                <input type="text" id="CompanyName_${experienceCount}" name="WorkExperiences[${experienceCount}].CompanyName" class="form-control"
+                    required />
+
+                <div class="form-group">
+                    <label for="StartDate_${experienceCount}">Start Date</label>
+                <input type="date" id="StartDate_${experienceCount}" name="WorkExperiences[${experienceCount}].StartDate" class="form-control" required />
+                    </div>
+
+                <div class="form-group">
+                    <label for="EndDate_${experienceCount}">End Date</label>
+                <input type="date" id="EndDate_${experienceCount}" name="WorkExperiences[${experienceCount}].EndDate" class="form-control" />
+                    </div>
+
+                <div class="form-group">
+                    <label for="Description_${experienceCount}">Job Description</label>
+                <textarea id="Description_${experienceCount}" name="WorkExperiences[${experienceCount}].JobDescription" class="form-control" required></textarea>
+                    </div>
+            `;
+
+            // Append the new section to the container
+            workExperienceContainer.appendChild(newExperience);
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const educationContainer = document.getElementById("educationContainer");
+    const addEducationButton = document.getElementById("addEducation");
+
+    addEducationButton.addEventListener("click", () => {
+        // Get the number of current education entries
+        const educationCount = educationContainer.children.length;
+
+        // Create a new div for the new education item
+        const newEducation = document.createElement("div");
+        newEducation.className = "education-item";
+        newEducation.innerHTML = `
+            <div class="form-group">
+                <label for="Degree_${educationCount}">Degree</label>
+                <input type="text" id="Degree_${educationCount}" name="Educations[${educationCount}].Degree" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="InstitutionName_${educationCount}">Institution Name</label>
+                <input type="text" id="InstitutionName_${educationCount}" name="Educations[${educationCount}].Institution" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="GraduationDate_${educationCount}">Graduation Date</label>
+                <input type="date" id="GraduationDate_${educationCount}" name="Educations[${educationCount}].GraduationYear" class="form-control" required />
+            </div>
+        `;
+
+        // Append the new education section to the container
+        educationContainer.appendChild(newEducation);
+    });
+});
+
+</script>

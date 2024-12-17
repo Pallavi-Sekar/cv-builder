@@ -1,0 +1,37 @@
+@model IEnumerable<CVBuilder.Models.PersonalDetails>
+
+<h2>Your Drafts</h2>
+
+@if (!Model.Any())
+{
+    <p>No drafts available.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cv in Model)
+            {
+                <tr>
+                    <td>@cv.FullName</td>
+                    <td>@cv.Email</td>
+                    <td>
+                        <a href="@Url.Action("EditDraft", new { id = cv.Id })" class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<!-- Debug info -->
+<div>
+    <p>Draft count: @Model.Count()</p>
+</div>

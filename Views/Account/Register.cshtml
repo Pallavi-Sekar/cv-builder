@@ -1,0 +1,56 @@
+@model CVBuilder.Models.RegisterViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="~/css/styles.css">  <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="register-container">
+        <form asp-action="Register" method="post">
+            @Html.AntiForgeryToken() <!-- Add anti-forgery token for security -->
+            <h2>Register</h2>
+
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="Username">Username</label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input asp-for="Email" type="email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="form-group">
+                <label for="ConfirmPassword">Confirm Password</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-submit">Register</button>
+            <p>Already have an account? <a href="@Url.Action("Login", "Account")">Login here</a></p>
+        </form>
+    </div>
+
+    <!-- Validation Scripts -->
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

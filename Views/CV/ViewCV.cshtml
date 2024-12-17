@@ -1,0 +1,106 @@
+@model CVBuilder.Models.CVViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View CV</title>
+</head>
+
+<body>
+    <h1>Curriculum Vitae</h1>
+
+    <!-- Personal Details Section -->
+    <h2>Personal Details</h2>
+    <p><strong>Full Name:</strong> @Model.PersonalDetails.FullName</p>
+    <p><strong>Contact Number:</strong> @Model.PersonalDetails.ContactNumber</p>
+    <p><strong>Email:</strong> @Model.PersonalDetails.Email</p>
+    <p><strong>Address:</strong> @Model.PersonalDetails.Address</p>
+
+    <hr />
+
+    <!-- Work Experience Section -->
+    <h2>Work Experience</h2>
+    @if (Model.WorkExperiences.Any())
+    {
+        @foreach (var work in Model.WorkExperiences)
+        {
+            <p><strong>Job Title:</strong> @work.JobTitle</p>
+            <p><strong>Company Name:</strong> @work.CompanyName</p>
+            <p><strong>Start Date:</strong> @work.StartDate</p>
+            <p><strong>End Date:</strong> @(work.EndDate)</p>
+            <p><strong>Description:</strong> @work.JobDescription</p>
+        }
+    }
+    else
+    {
+        <p>No work experience added.</p>
+    }
+
+    <hr />
+
+    <!-- Education Section -->
+    <h2>Education</h2>
+    @if (Model.Educations.Any())
+    {
+            @foreach (var education in Model.Educations)
+            {
+                    <p><strong>Degree:</strong> @education.Degree</p>
+                    <p><strong>Institution Name:</strong> @education.Institution</p>
+                    <p><strong>Graduation Date:</strong> @education.GraduationYear</p>
+            }
+    }
+    else
+    {
+        <p>No education details added.</p>
+    }
+
+    <hr />
+
+    <!-- Skills Section -->
+    <h2>Skills</h2>
+    @if (Model.Skills.Any())
+    {
+        <ul>
+            @foreach (var skill in Model.Skills)
+            {
+                <li>@skill.SkillName</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No skills added.</p>
+    }
+
+    <hr />
+
+    <!-- Languages Section -->
+    <h2>Languages</h2>
+    @if (Model.Languages.Any())
+    {
+        <ul>
+            @foreach (var language in Model.Languages)
+            {
+                <li>
+                    <p><strong>Language:</strong> @language.LanguageName</p>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No languages added.</p>
+    }
+
+    <hr />
+
+    <!-- Download PDF Button -->
+    <form asp-action="GeneratePDF" method="post">
+    <button type="submit" name="id" value="@Model.PersonalDetails.Id">Download as PDF</button>
+</form>
+</body>
+
+</html>

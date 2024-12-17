@@ -1,0 +1,44 @@
+@model CVBuilder.Models.LoginViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="~/css/styles.css">  <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="login-container">
+        <form asp-action="Login" method="post" class="login-form">
+            <h2>Login</h2>
+
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="Username">Username</label>
+                <input type="text" id="Username" name="Username" class="form-control" placeholder="Enter your username" required value="@Model?.Username" />
+                @if (ViewData.ModelState["Username"]?.Errors.Count > 0)
+                {
+                    <span class="text-danger">@ViewData.ModelState["Username"]?.Errors[0].ErrorMessage</span>
+                }
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <input type="password" id="Password" name="Password" class="form-control" placeholder="Enter your password" required />
+                @if (ViewData.ModelState["Password"]?.Errors.Count > 0)
+                {
+                    <span class="text-danger">@ViewData.ModelState["Password"]?.Errors[0].ErrorMessage</span>
+                }
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-submit">Login</button>
+
+            <!-- Link to Register page -->
+            <p>Don't have an account? <a href="@Url.Action("Register", "Account")">Register here</a></p>
+        </form>
+    </div>
+</body>
+</html>
